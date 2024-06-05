@@ -1,6 +1,6 @@
 {
   "name": "co.mirailabs.unitysdk",
-  "version": "2.0.0",
+  "version": "2.0.1-dev",
   "displayName": "Mirailabs Unity SDK",
   "description": "This package provide some function",
   "dependencies": {
