@@ -1,0 +1,31 @@
+{
+  "name": "co.mirailabs.unitysdk",
+  "version": "2.0.0",
+  "displayName": "Mirailabs Unity SDK",
+  "description": "This package provide some function",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "2.0.0",
+    "com.itisnajim.socketiounity": "1.1.4"
+  },
+  "author": {
+    "name": "Mirailabs",
+    "email": "support@mirailabs.co",
+    "url": "https://mirailabs.co/"
+  },
+  "keywords": [
+    "mirai",
+    "mirailabs",
+    "sdk",
+    "auth",
+    "referal",
+    "shards",
+    "marketplace"
+  ],
+  "samples": [
+    {
+      "displayName": "MiraiUnitySDK Sample",
+      "description": "Basic used SDK",
+      "path": "Samples~/MiraiSample"
+    }
+  ]
+}

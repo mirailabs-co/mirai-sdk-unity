@@ -1,0 +1,17 @@
+{
+    "name": "Mirai.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:319c59bd25f604a7b9d236394f814390",
+        "GUID:948895595f48a4970b4d8f61ed62fa67"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
