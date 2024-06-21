@@ -41,8 +41,7 @@ namespace Mirai
             OnInitDone?.Invoke();
         }
 
-        private static async Task<string> CreateDAppLink(string type, IDictionary<string, object> parameters,
-            object metadata = null, CancellationToken cancellationToken = default)
+        private static async Task<string> CreateDAppLink(string type, IDictionary<string, object> parameters, object metadata = null,string chain=null, CancellationToken cancellationToken = default)
         { 
             var actionId = await _shardsTechApi.Request<string>("actions", "_id", new { type, metadata }, cancellationToken: cancellationToken);
             var qParams = parameters.ToDictionary(kv => kv.Key, kv => Convert.ToString(kv.Value, CultureInfo.InvariantCulture));
@@ -84,7 +83,7 @@ namespace Mirai
             
                 if (!MiraiSDK.MiraiAppInstalled)
                 {
-                    if (MiraiSdkSettings.Instance.callMiraiAppType == MiraiSdkSettings.CallMiraiAppType.SendNotification && IsLinkedAddress)
+                    if (!Application.isEditor && MiraiSdkSettings.Instance.callMiraiAppType == MiraiSdkSettings.CallMiraiAppType.SendNotification && IsLinkedAddress)
                     {
                         try
                         {
@@ -120,9 +119,9 @@ namespace Mirai
             }
         }
         
-        private static async Task ExecuteAction(string type, IDictionary<string, object> parameters, object metadata = null, CancellationToken cancellationToken = default)
+        private static async Task ExecuteAction(string type, IDictionary<string, object> parameters, object metadata = null,string chain=null, CancellationToken cancellationToken = default)
         {
-            var dAppLink = await CreateDAppLink(type, parameters, metadata, cancellationToken);
+            var dAppLink = await CreateDAppLink(type, parameters, metadata,chain, cancellationToken);
             await OpenDAppLink(dAppLink, cancellationToken);
         }
         
@@ -154,7 +153,7 @@ namespace Mirai
             => ExecuteAction("link-address", new Dictionary<string, object>()
             {
                 { "userId", MyUser.userId }
-            }, null, cancellationToken);
+            }, new {MyUser.userId}, null,cancellationToken);
         
         public static async Task<ShardsTechUser> FetchMyUser()
         {
@@ -178,7 +177,7 @@ namespace Mirai
         #endregion
    
         #region Guild
-        public static async Task CreateGuild(string name, double seatPrice, object metadata, float txGuildOwnerShare, ProfitPercentConfig profitPercentConfig,CancellationToken cancellationToken=default)
+        public static async Task CreateGuild(string name, double seatPrice, object metadata, float txGuildOwnerShare, ProfitPercentConfig profitPercentConfig,string chain=null,CancellationToken cancellationToken=default)
         {
             var rewardShareForMembers= 1 - profitPercentConfig.FractionsOwnerPercent;
             var guildOwnerShare = profitPercentConfig.GuildOwnerPercent / rewardShareForMembers;
@@ -189,7 +188,7 @@ namespace Mirai
                 { "rewardShareForMembers", rewardShareForMembers },
                 { "txGuildOwnerShare", txGuildOwnerShare },
                 { "guildOwnerShare", guildOwnerShare }
-            }, metadata, cancellationToken: cancellationToken);
+            }, metadata, chain, cancellationToken);
             await FetchMyGuild();
         }
         public static Task<GuildScoresDTO> GetGuildScores(string leaderBoardId,string name="", int page = 1, int limit = 100, SortType sort = SortType.desc)
@@ -306,7 +305,7 @@ namespace Mirai
             await ExecuteAction("disband-guild", new Dictionary<string, object>()
             {
                 { "guildAddress", MyGuild.address },
-            }, cancellationToken: cancellationToken);
+            },null,MyGuild.chain, cancellationToken);
             await FetchMyGuild();
         }
 
@@ -366,23 +365,23 @@ namespace Mirai
             => _shardsTechApi.Request<FractionsPriceData>($"guilds/share-price/{guildId}/{amount}");
         public static Task<FractionsPriceData> GetSellFractionsPrice(string guildId, long amount=1)
             => _shardsTechApi.Request<FractionsPriceData>($"guilds/sell-share-price/{guildId}/{amount}");
-        public static async Task BuyFractions(string guildAddress, long amount, long index=0,CancellationToken cancellationToken=default)
+        public static async Task BuyFractions(string guildAddress, long amount, long index=0,string chain=null,CancellationToken cancellationToken=default)
         {
             await ExecuteAction("buy-share", new Dictionary<string, object>()
             {
                 { "guildAddress", guildAddress },
                 { "amount", amount },
                 { "index", index }
-            }, null, cancellationToken);
+            }, null, chain,cancellationToken);
         }
-        public static async Task SellFractions(string guildAddress, long amount,long index=0,CancellationToken cancellationToken=default)
+        public static async Task SellFractions(string guildAddress, long amount,long index=0,string chain=null,CancellationToken cancellationToken=default)
         {
             await ExecuteAction("sell-share",new Dictionary<string, object>()
             {
                 { "guildAddress", guildAddress },
                 { "amount", amount },
                 { "index", index }
-            },null, cancellationToken);
+            },null, chain,cancellationToken);
         }
         #endregion
         
@@ -391,7 +390,7 @@ namespace Mirai
             => _shardsTechApi.Request<List<SellSeatData>>($"user-sell-guild/{guildId ?? "list"}");
         public static Task<SellSeatData> GetBuySeatPrice(string guildId)
             => _shardsTechApi.Request<SellSeatData>($"user-sell-guild/slot-price/{guildId}");
-        public static async Task BuySeat(string guildAddress,string seller, double price,CancellationToken cancellationToken=default)
+        public static async Task BuySeat(string guildAddress,string seller, double price,string chain=null,CancellationToken cancellationToken=default)
         {
             await ExecuteAction("buy-slot", new Dictionary<string, object>()
             {
@@ -401,7 +400,7 @@ namespace Mirai
                 guildAddress,
                 seller,
                 price
-            }, cancellationToken);
+            }, chain,cancellationToken);
             await FetchMyGuild();
         }
 
