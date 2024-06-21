@@ -1,4 +1,12 @@
-# README Placeholder
-This file will be overritten from the CI system with the real one from the project root.
+# MiraiSDK
+### Install
+- Install Best HTTP
 
-[README](../../README.md)
+- Window->Package Manager->Add from git Url..
+    ```
+    ssh://git@github.com/mirailabs-co/mirai-sdk-unity.git#upm
+    ```
+    if you use Unity > 2022
+    ```
+    https://github.com/mirailabs-co/mirai-sdk-unity.git#upm
+    ```
