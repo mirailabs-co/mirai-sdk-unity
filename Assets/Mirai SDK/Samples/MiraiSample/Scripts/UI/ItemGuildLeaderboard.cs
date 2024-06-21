@@ -72,6 +72,6 @@ public class ItemGuildLeaderboard : MonoBehaviour
     }
     public async void BuySeatClick()
     {
-        await Block.ExecuteTask(ct => ShardsTech.BuySeat(_guildScore.guild.address, _sellSeatData.seller, _sellSeatData.price, ct));
+        await Block.ExecuteTask(ct => ShardsTech.BuySeat(_guildScore.guild.address, _sellSeatData.seller, _sellSeatData.price, cancellationToken:ct));
     }
 }
