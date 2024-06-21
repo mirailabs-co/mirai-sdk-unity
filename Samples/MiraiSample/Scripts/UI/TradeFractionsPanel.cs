@@ -90,10 +90,10 @@ public class TradeFractionsPanel : MonoBehaviour
         if (Amount <= 0) return;
         if (IsBuy)
             await Block.ExecuteTask(ct => 
-                ShardsTech.BuyFractions(_guildData.address, Amount,0, ct));
+                ShardsTech.BuyFractions(_guildData.address, Amount,0, cancellationToken:ct));
         else
             await Block.ExecuteTask(ct =>
-                ShardsTech.SellFractions(_guildData.address, Amount,0, ct));
+                ShardsTech.SellFractions(_guildData.address, Amount,0, cancellationToken:ct));
         _onTradeDone.Invoke();
     }
 }
