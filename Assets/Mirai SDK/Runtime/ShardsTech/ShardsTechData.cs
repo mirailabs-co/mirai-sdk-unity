@@ -200,7 +200,6 @@ namespace Mirai
         public ShardsTechUser user;
         public string clientId;
         public double price;
-        public float waitTime; 
     }
     
     [Serializable]
@@ -208,6 +207,7 @@ namespace Mirai
     {
         public long index;
         public double price;
+        public float waitTime;
     }
     
     [Serializable]
