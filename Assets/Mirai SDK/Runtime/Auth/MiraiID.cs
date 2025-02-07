@@ -132,7 +132,7 @@ namespace Mirai
         private static async Task<(IDictionary<string,string> linkParams,string redirect_uri)> RequestUrlAndWaitDeeplink(string type,CancellationToken cancellationToken=default)
         {
             var  redirect_uri = MiraiSdkSettings.Instance.redirect_uri;
-#if UNITY_EDITOR || (!UNITY_IOS && !UNITY_ANDROID)
+#if UNITY_EDITOR || (!UNITY_IOS && !UNITY_ANDROID && !UNITY_WEBGL)
             redirect_uri = $"http://localhost:{Utils.FindAvailablePort(7890, 7891)}";
 #endif
             var endPoint = $"request-oauth?type={type}&client_id={MiraiSdkSettings.Instance.ClientID}&redirect_uri={redirect_uri}&scope={MiraiSdkSettings.Instance.scope}";

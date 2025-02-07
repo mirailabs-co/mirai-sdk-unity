@@ -1,6 +1,5 @@
 # MiraiSDK
 ### Install
-- Install Best HTTP
 
 - Window->Package Manager->Add from git Url..
     ```
